@@ -1,6 +1,6 @@
 # Weather CLI
 
-Kommandozeilen-Tool für Wettervorhersagen mit der [Open-Meteo API](https://open-meteo.com/).
+Command-line tool for weather forecasts using the [Open-Meteo API](https://open-meteo.com/).
 
 ## Installation
 
@@ -8,53 +8,64 @@ Kommandozeilen-Tool für Wettervorhersagen mit der [Open-Meteo API](https://open
 pip install requests
 ```
 
-## Verwendung
+## Usage
 
 ```bash
-python3 weather.py <ort> [--land CODE] [--tage N] [--json]
-python3 weather.py --plz <PLZ> [--land CODE] [--tage N] [--json]
+python3 weather.py <location> [--country CODE] [--days N] [--lang LANG] [--json]
+python3 weather.py --plz <postal_code> [--country CODE] [--days N] [--lang LANG] [--json]
 ```
 
-### Argumente
+### Arguments
 
-| Argument | Kurz | Beschreibung |
-|----------|------|--------------|
-| `ort` | | Name des Ortes |
-| `--plz PLZ` | `-p` | Postleitzahl (alternativ zum Ortsnamen) |
-| `--land CODE` | `-l` | Ländercode (DE, AT, CH, US, ...) |
-| `--tage N` | `-t` | Vorhersagetage, 1-16 (Standard: 1) |
-| `--json` | `-j` | Ausgabe im JSON-Format |
+| Argument | Short | Description |
+|----------|-------|-------------|
+| `location` | | Location name |
+| `--plz` | `-p` | Postal code (alternative to location name) |
+| `--land` / `--country` | `-l` | Country code (DE, AT, CH, US, ...) |
+| `--tage` / `--days` | `-t` | Forecast days, 1-16 (default: 1) |
+| `--lang` | `-L` | Language: `de` or `en` (default: en) |
+| `--json` | `-j` | JSON output |
 
-### Beispiele
+### Examples
 
 ```bash
-# Per Ortsname
+# By location name
 python3 weather.py Berlin
-python3 weather.py München --land DE
+python3 weather.py Munich --country DE
 
-# Per PLZ
+# By postal code
 python3 weather.py --plz 10115
-python3 weather.py --plz 10115 --land DE
+python3 weather.py --plz 10115 --country DE
 
-# Mehrere Tage
-python3 weather.py Berlin -t 7
+# Multiple days
+python3 weather.py Berlin --days 7
 
-# JSON-Ausgabe
+# German output
+python3 weather.py Berlin --lang de
+
+# JSON output
 python3 weather.py Berlin --json
 ```
 
-### Mehrdeutige Orte
+### Ambiguous Locations
 
-Bei mehreren Treffern (z.B. "Frankfurt") erscheint ein Hinweis:
+If multiple locations match (e.g., "Frankfurt"):
 
 ```
-'Frankfurt' ist nicht eindeutig. Bitte PLZ verwenden:
-  weather.py --plz <PLZ>
+'Frankfurt' is ambiguous. Please use postal code:
+  weather.py --plz <postal_code>
+```
+
+If a postal code exists in multiple countries:
+
+```
+Postal code '10115' exists in multiple countries: DE, US, ...
+Please specify country, e.g.: weather.py --plz 10115 --country DE
 ```
 
 ## APIs
 
-- [Open-Meteo](https://open-meteo.com/) - Wetterdaten und Ortssuche
-- [Nominatim/OpenStreetMap](https://nominatim.org/) - PLZ-Suche
+- [Open-Meteo](https://open-meteo.com/) - Weather data and location search
+- [Nominatim/OpenStreetMap](https://nominatim.org/) - Postal code search
 
-Keine Registrierung oder API-Keys erforderlich.
+No registration or API keys required.
